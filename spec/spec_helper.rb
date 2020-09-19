@@ -5,7 +5,7 @@
 require 'selenium-webdriver'
 require 'capybara/rspec'
 require 'site_prism'
-require 'screen-recorder'
+#require 'screen-recorder'
 
 require 'active_support'
 
@@ -76,14 +76,14 @@ end
 RSpec.configure do |config|
   config.include Capybara::DSL
   config.before do |event|
-    @recorder = ScreenRecorder::Desktop.new(output: 'spec/reports/recording.mkv')
-    @recorder.start
+#    @recorder = ScreenRecorder::Desktop.new(output: 'spec/reports/recording.mkv')
+#    @recorder.start
   end
   config.after do |event|
-    sleep 3
-    @recorder.stop
-    @recorder.video
-    @recorder.video.transcode("spec/reports/recording.mp4") { |progress| puts progress } 
+#    sleep 3
+#    @recorder.stop
+#    @recorder.video
+#    @recorder.video.transcode("spec/reports/recording.mp4") { |progress| puts progress } 
   end
 end
 
