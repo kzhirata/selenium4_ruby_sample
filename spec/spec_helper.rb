@@ -8,6 +8,9 @@ require 'site_prism'
 #require 'screen-recorder'
 
 require 'active_support'
+require 'webdrivers/chromedriver'
+require 'webdrivers/geckodriver'
+
 
 # spec/pages,spec/test以下をロードする
 ActiveSupport::Dependencies.autoload_paths << "#{File.expand_path(File.dirname(__FILE__))}/pages"
@@ -57,6 +60,10 @@ else
       }	
       options.add_preference(:download , prefs)
       options.add_argument('--no-sandbox')
+      if ENV['GITHUB_ACTIONS'] == 'true'
+        options.add_argument('headless')
+        options.add_argument('disable-gpu') if Gem.win_platform?
+      end
       Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: options)
     else
       Capybara::Selenium::Driver.new(app, browser: browser)
@@ -75,6 +82,8 @@ end
 
 RSpec.configure do |config|
   config.include Capybara::DSL
+  Webdrivers::Chromedriver.update
+  Capybara.page.driver.browser.manage.window.maximize
   config.before do |event|
 #    @recorder = ScreenRecorder::Desktop.new(output: 'spec/reports/recording.mkv')
 #    @recorder.start

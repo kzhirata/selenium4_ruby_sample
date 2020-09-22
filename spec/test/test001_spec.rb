@@ -13,9 +13,13 @@ describe '検索', type: :feature, js: true do
     it 'タイトルがseleniumであること' do
       top = TopPage.new
       top.load
-      result = top.search('selenium')
-      expect(page).to have_title('selenium - Google 検索')
-      expect(result.search_results[0]).to have_text('Seleniumブラウザー自動化プロジェクト')
+      result = top.search('selenium.dev')
+      if ENV['GITHUB_ACTIONS'] == 'true' 
+        expect(page).to have_title('selenium.dev - Google Search')
+      else 
+        expect(page).to have_title('selenium.dev - Google 検索')
+      end
+      expect(result.search_results[0]).to have_text('Selenium')
     end
 
   end

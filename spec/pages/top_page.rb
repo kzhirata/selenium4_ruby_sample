@@ -8,7 +8,8 @@ class TopPage < SitePrism::Page
 
   def search(word)
     search_form.set(word)
-    submit_buttons[0].click
+    search_form.send_keys(:enter)
+#    submit_buttons[0].click
     SearchResultPage.new
   end
 end
